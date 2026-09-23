@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sd-agent"
+version = "0.1.0"
+description = "Outsourced eMMC defect analysis agents: genuine/false classification and root-cause categorization"
+requires-python = ">=3.11"
+dependencies = [
+  "pandas>=2.2",
+  "scikit-learn>=1.5",
+  "scipy>=1.11",
+  "pydantic>=2.7",
+  "pyyaml>=6",
+  "beautifulsoup4>=4.12",
+  "lxml>=5",
+  "typer>=0.12",
+  "joblib>=1.4",
+]
+
+[project.optional-dependencies]
+embed = ["sentence-transformers>=3"]
+rest = ["requests>=2.32"]
+llm = ["anthropic>=1.0"]
+jev = ["typesafe-sdk"]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[project.scripts]
+sd-agent = "sd_agent.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
