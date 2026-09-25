@@ -10,7 +10,7 @@ SD_Agent is a CLI pipeline for analyzing defects on outsourced eMMC projects. It
 
 The README and the user-facing text are in Korean.
 
-**Status:** the repository is still a scaffold. Every package under `src/sd_agent/` holds only an empty `__init__.py`. The `sd_agent.cli:app` entry point in `pyproject.toml` (a Typer app) and the `configs/` directory the README mentions do not exist yet. The architecture below is the planned design. Check what actually exists before assuming a module is there.
+**Status:** the repository is still mostly a scaffold. What exists: `sources/jira_export.py` (Jira HTML/CSV export reader), `judges/jev_readiness.py`, and a Typer `cli.py` with only the `jev-readiness` command. The other pipeline commands and the `configs/` directory the README mentions do not exist yet. The architecture below is the planned design. Check what actually exists before assuming a module is there.
 
 ## Commands
 
@@ -21,6 +21,11 @@ python -m venv .venv && .venv/bin/pip install -e .[dev]     # extras: embed, res
 .venv/bin/pytest                                           # testpaths=tests, pythonpath=src
 .venv/bin/pytest tests/test_x.py::test_name                # single test
 .venv/bin/ruff check . && .venv/bin/ruff format .          # line-length 110, py311
+```
+
+Check whether the Jira history has enough labeled cases to calibrate Jev. It prints aggregates only, no issue text, so the output is safe to share:
+```
+sd-agent jev-readiness -e <export.html|dir> [--genuine-col ... --cause-col ... --genuine-values 진성 --false-values 가성]
 ```
 
 Planned pipeline commands, in this order:
